@@ -40,6 +40,9 @@ const errorHandler = async (err, req, res, next) => {
     case 'MISSING_FILE':
       res.status(404).json({ message: 'File is not found' })
       break;
+    case "NOTFOUND_Message":
+      res.status(404).json({ message: 'Message is not found' })
+      break
     default:
       res.status(500).json({ message: 'Internal Server Error' })
       break;
