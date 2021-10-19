@@ -28,18 +28,18 @@ const errorHandler = async (err, req, res, next) => {
     case 'NOTFOUND_CATEGORY':
       res.status(404).json({ message: 'Category is not found' })
       break;
-    case 'NOTFOUND_POST':
-      res.status(404).json({ message: 'Post is not found' })
+    case 'NOTFOUND_PRODUCT':
+      res.status(404).json({ message: 'Product is not found' })
       break;
     case 'NOTFOUND_USER':
       res.status(404).json({ message: 'User is not found' })
       break;
-    case 'NOTFOUND_FAVORITE':
-      res.status(404).json({ message: 'Data Favorite is not found' })
+    case 'NOTFOUND_WISHLIST':
+      res.status(404).json({ message: 'Data Wishlist is not found' })
       break;
-    case 'MISSING_FILE':
-      res.status(404).json({ message: 'File is not found' })
-      break;
+    case "NOTFOUND_MESSAGE":
+      res.status(404).json({ message: 'Message is not found' })
+      break
     default:
       res.status(500).json({ message: 'Internal Server Error' })
       break;
