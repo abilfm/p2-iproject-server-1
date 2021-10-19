@@ -20,9 +20,9 @@ router.delete('/messages/:id', messageController.delete)
 
 router.get('/products', productController.findAll)
 router.get('/products/:id', productController.findByPk)
-// router.post('/products', productController.create)
-// router.put('/products/:id', productController.update)
-// router.delete('/products/:id', productController.delete)
+router.post('/products', productController.create)
+router.put('/products/:id', productController.update)
+router.delete('/products/:id', productController.delete)
 
 router.use(authentication)
 
