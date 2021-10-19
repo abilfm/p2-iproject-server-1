@@ -33,7 +33,7 @@ class ControllerMessages {
         await Message.destroy({ where: { id: req.params.id } })
         res.status(200).json({ message: "Message has successfully been deleted" })
       } else {
-        throw { name: "NOTFOUND_Message" }
+        throw { name: "NOTFOUND_MESSAGE" }
       }
     } catch (err) {
       next(err)
