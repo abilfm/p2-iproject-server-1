@@ -11,12 +11,12 @@ const router = express.Router()
 router.post('/login', userController.login)
 router.post('/register', userController.register)
 
-router.get('/categories', categoryController.findAll)
-router.get('/categories/:id', categoryController.findByPk)
-
 router.get('/messages', messageController.findAll)
 router.post('/messages', messageController.create)
 router.delete('/messages/:id', messageController.delete)
+
+router.get('/categories', categoryController.findAll)
+router.get('/categories/:id', categoryController.findByPk)
 
 router.get('/products', productController.findAll)
 router.get('/products/:id', productController.findByPk)
@@ -26,9 +26,9 @@ router.delete('/products/:id', productController.delete)
 
 router.use(authentication)
 
-router.get('/wishlist', wishlistController.findAll)
-router.post('/wishlist/:productId', wishlistController.create)
-router.delete('/wishlist/:id', wishlistController.delete)
+router.get('/wishlists', wishlistController.findAll)
+router.post('/wishlists/:productId', wishlistController.create)
+router.delete('/wishlists/:id', wishlistController.delete)
 
 router.use(errorHandler)
 
