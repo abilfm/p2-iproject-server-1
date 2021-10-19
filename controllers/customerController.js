@@ -1,10 +1,7 @@
 const { User, Post, Category, Favorite, Sequelize } = require('../models/index.js')
 const { decodePassword } = require('../helpers/bcrypt.js')
 const { generateToken } = require('../helpers/jwt.js')
-const { OAuth2Client } = require('google-auth-library');
 const { Op } = Sequelize;
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID
-const client = new OAuth2Client(CLIENT_ID);
 
 class CustomerController {
   static async register (req, res, next) {
@@ -46,42 +43,7 @@ class CustomerController {
     }
   }
   
-  static async authGoogle (req, res, next) {
-    try {
-      const { google_token } = req.body
-
-      const ticket = await client.verifyIdToken({
-        idToken: google_token,
-        audience: CLIENT_ID
-      });
-      
-      const payload = ticket.getPayload();
-      const randomPassword = Math.random().toString(36).slice(-8)
-
-      const [user, created] = await User.findOrCreate({
-        where: { 
-          email: payload.email,
-        },
-        defaults: { 
-          username: payload.name,
-          email: payload.email,
-          password: randomPassword,
-          role: 'customer',
-          phoneNumber: '-',
-          address: '-'
-        }
-      })
-
-      if (user || created) {
-        const access_token = generateToken({ id: user.id, email: user.email, role: user.role })
-        res.status(200).json({ access_token })
-      } else {
-        throw { name: 'UNAUTHORIZED_LOGIN' }
-      }
-    } catch (err) {
-      next(err)
-    }
-  }
+  
 
   static async customerPosts (req, res, next) {
     const { filter, page, title } = req.query

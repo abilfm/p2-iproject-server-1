@@ -34,8 +34,8 @@ const errorHandler = async (err, req, res, next) => {
     case 'NOTFOUND_USER':
       res.status(404).json({ message: 'User is not found' })
       break;
-    case 'NOTFOUND_FAVORITE':
-      res.status(404).json({ message: 'Data Favorite is not found' })
+    case 'NOTFOUND_WISHLIST':
+      res.status(404).json({ message: 'Data Wishlist is not found' })
       break;
     case 'MISSING_FILE':
       res.status(404).json({ message: 'File is not found' })

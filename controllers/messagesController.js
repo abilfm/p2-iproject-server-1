@@ -1,6 +1,15 @@
 const { Message } = require('../models/index.js')
 
 class ControllerMessages {
+  static async findAll (req, res, next) {
+    try {
+      const messages = await Message.findAll()
+      res.status(200).json(messages)
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async create(req, res, next) {
     const message = {
       name: req.body.name,
