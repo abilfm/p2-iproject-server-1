@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "abilfm",
+    "password": "postgres",
+    "database": "fmskincarea_development",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "abilfm",
+    "password": "postgres",
+    "database": "fmskincarea_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
