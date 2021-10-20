@@ -1,4 +1,5 @@
 const { Product, Category } = require('../models/index.js')
+const nodemailer = require('nodemailer')
 
 class ProductController {
   static async findAll (req, res, next) {
@@ -6,6 +7,19 @@ class ProductController {
       const products = await Product.findAll({ include: Category })
       res.status(200).json(products)
     } catch (err) {
+      next(err)
+    }
+  }
+
+  static async findAllByCategory (req, res, next) {
+    try {
+      const products = await Product.findAll({
+        where: { CategoryId : req.params.id },
+        include: { model: Category }
+      })
+      res.status(200).json(products)
+    } catch (err) {
+      console.log(err)
       next(err)
     }
   }
@@ -38,8 +52,29 @@ class ProductController {
       CategoryId: req.body.CategoryId
     }
 
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_FROM,
+        pass: process.env.PASS_FROM
+      }
+    })
+
+    const options = {
+      from: process.env.EMAIL_FROM,
+      to: process.env.EMAIL_TO,
+      subject: 'New Product',
+      html: '<body><h1>Hello, User!</h1><h3>New product has been added to our website. Do not forget to check it out!</h3></body>'
+    }
     try {
       const newProduct = await Product.create(dataProduct)
+      await transporter.sendMail(options, (err, info) => {
+        if(err) {
+          console.log(err)
+        } else {
+          console.log('INFO:', info.response)
+        }
+      })
       res.status(201).json(newProduct)
     } catch (err) {
       next (err)
