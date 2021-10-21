@@ -1,4 +1,6 @@
 const express = require('express')
+const passport = require('passport')
+const FacebookStrategy = require('passport-facebook').Strategy
 const userController = require('../controllers/userController.js')
 const productController = require('../controllers/productControllers.js')
 const categoryController = require('../controllers/categoryController.js')
@@ -10,6 +12,28 @@ const router = express.Router()
 
 router.post('/login', userController.login)
 router.post('/register', userController.register)
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.CLIENT_FB_ID,
+    clientSecret: process.env.CLIENT_FB_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/fmskincarea"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+router.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+router.get('/auth/facebook/fmskincarea',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+});
 
 router.get('/messages', messageController.findAll)
 router.post('/messages', messageController.create)
