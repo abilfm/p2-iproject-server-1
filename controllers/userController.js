@@ -2,6 +2,7 @@ const { User } = require('../models/index.js')
 const { decodePassword } = require('../helpers/bcrypt.js')
 const { generateToken } = require('../helpers/jwt.js')
 
+
 class UserController {
   static async register (req, res, next) {
     try {
@@ -40,6 +41,7 @@ class UserController {
       next(err)
     }
   }
+
 }
 
 module.exports = UserController
